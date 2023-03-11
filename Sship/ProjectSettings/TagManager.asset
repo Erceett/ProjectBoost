@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Friendly
+  - Finished
+  - Obstacle
+  - Fuel
   layers:
   - Default
   - TransparentFX

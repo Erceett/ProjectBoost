@@ -7,6 +7,7 @@ using UnityEngine.UIElements;
 public class Movements : MonoBehaviour
 {
     Rigidbody rb;
+    AudioSource aSource;
     [SerializeField] float mainThrust = 100f;
     [SerializeField] float rotateThrust = 100f;
 
@@ -14,6 +15,7 @@ public class Movements : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        aSource = GetComponent<AudioSource>();;
     }
 
 
@@ -47,7 +49,15 @@ public class Movements : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            rb.AddRelativeForce(Vector3.up * mainThrust * Time.deltaTime); //objenin eksenlerine göre kuvvet uygulanýyor.
+            rb.AddRelativeForce(Vector3.up * mainThrust * Time.deltaTime); //objenin eksenlerine gore kuvvet uygulaniyor.
+            if (!aSource.isPlaying)
+            {
+                aSource.Play();
+            }   
+        }
+        else
+        {
+            aSource.Stop();
         }
         
     }
