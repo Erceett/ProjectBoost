@@ -8,8 +8,15 @@ public class Movements : MonoBehaviour
 {
     Rigidbody rb;
     AudioSource aSource;
+
     [SerializeField] float mainThrust = 100f;
     [SerializeField] float rotateThrust = 100f;
+
+    [SerializeField] ParticleSystem thrustParticle;
+    [SerializeField] ParticleSystem leftRotateParticle;
+    [SerializeField] ParticleSystem rightRotateParticle;
+
+    [SerializeField] AudioClip engineSound;
 
 
     void Start()
@@ -24,18 +31,52 @@ public class Movements : MonoBehaviour
         ProcessThrust();
         ProcessRotation();
     }
+    private void ProcessThrust()
+    {
+        if (Input.GetKey(KeyCode.Space))
+        {
+            StartThrusting();
+        }
+        else
+        {
+            StopThrusting();
+        }
+
+    }
 
     private void ProcessRotation()
     {
         if (Input.GetKey(KeyCode.A))
         {
-            ApplyRotation(rotateThrust);
+            LeftRotation();
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            ApplyRotation(-rotateThrust);
+            RightRotation();
         }
-        
+        else
+        {
+            StopRotation();
+        }
+    }
+
+    private void StartThrusting()
+    {
+        rb.AddRelativeForce(Vector3.up * mainThrust * Time.deltaTime); //objenin eksenlerine gore kuvvet uygulaniyor.
+        if (!aSource.isPlaying)
+        {
+            aSource.PlayOneShot(engineSound);
+        }
+        if (!thrustParticle.isPlaying)
+        {
+            thrustParticle.Play();
+        }
+    }
+
+    private void StopThrusting()
+    {
+        aSource.Stop();
+        thrustParticle.Stop();
     }
 
     private void ApplyRotation(float rotationThisFrame)
@@ -45,20 +86,31 @@ public class Movements : MonoBehaviour
         rb.freezeRotation = false; // hareket gereksiz zorlaþýyor
     }
 
-    private void ProcessThrust()
+    private void RightRotation()
     {
-        if (Input.GetKey(KeyCode.Space))
+        ApplyRotation(-rotateThrust);
+        if (!leftRotateParticle.isPlaying)
         {
-            rb.AddRelativeForce(Vector3.up * mainThrust * Time.deltaTime); //objenin eksenlerine gore kuvvet uygulaniyor.
-            if (!aSource.isPlaying)
-            {
-                aSource.Play();
-            }   
+            leftRotateParticle.Play();
         }
-        else
-        {
-            aSource.Stop();
-        }
-        
     }
+
+    private void LeftRotation()
+    {
+        ApplyRotation(rotateThrust);
+        if (!rightRotateParticle.isPlaying)
+        {
+            rightRotateParticle.Play();
+        }
+    }
+
+    private void StopRotation()
+    {
+        rightRotateParticle.Stop();
+        leftRotateParticle.Stop();
+    }
+
+    
+
+
 }

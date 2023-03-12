@@ -6,15 +6,29 @@ using UnityEngine.SceneManagement;
 
 public class CollisionHandler : MonoBehaviour
 {
+    [SerializeField] float invokeTime = 1f;
+
+    [SerializeField] AudioClip crashSound;
+    [SerializeField] AudioClip successSound;
+
+    [SerializeField] ParticleSystem crashParticle;
+    [SerializeField] ParticleSystem successParticle;
+
+    AudioSource aSource;
+    
+    bool isTransitioning = false;
+
+    private void Start()
+    {
+        aSource = GetComponent<AudioSource>();
+    }
+
     private void OnCollisionEnter(Collision other)
     {
+        if (isTransitioning){return; }
+        
         switch (other.gameObject.tag)
         {
-            case "Fuel":
-                {
-                    Debug.Log("You picked up FUEL");
-                }
-                break;
             case "Friendly":
                 {
                     Debug.Log("This things is FRIEND");
@@ -22,16 +36,38 @@ public class CollisionHandler : MonoBehaviour
                 break;
             case "Finished":
                 {
-                    NextLevel();
+                    StartNextLevelSequence();
                 }
                 break;
             default:
                 {
-                    ReloadLevel();
+                    StartCrashSequence();
                 }
                 break;
         }
     }
+
+    private void StartNextLevelSequence()
+    {
+        isTransitioning = true;
+        GetComponent<Movements>().enabled= false;
+        GetComponent<AudioSource>().Stop();
+        aSource.PlayOneShot(successSound, 1f);
+        GetComponent<Rigidbody>().freezeRotation = true;
+        successParticle.Play();
+        Invoke("NextLevel", invokeTime);
+    }
+
+    private void StartCrashSequence()
+    {
+        isTransitioning = true;
+        GetComponent<Movements>().enabled = false;
+        GetComponent<AudioSource>().Stop();
+        aSource.PlayOneShot(crashSound, 0.4f);
+        crashParticle.Play();
+        Invoke("ReloadLevel", invokeTime);
+    }
+
 
     private void NextLevel()
     {
