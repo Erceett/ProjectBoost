@@ -351,6 +351,9 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
 "Assets/Scripts/CollisionHandler.cs"
 "Assets/Scripts/Movements.cs"
+"Assets/Scripts/NegatifSpinner.cs"
+"Assets/Scripts/Oscillator.cs"
+"Assets/Scripts/Spinner.cs"
 -langversion:9.0
 
 /deterministic

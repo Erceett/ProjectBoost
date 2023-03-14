@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class CollisionHandler : MonoBehaviour
 {
@@ -23,6 +24,31 @@ public class CollisionHandler : MonoBehaviour
         aSource = GetComponent<AudioSource>();
     }
 
+    private void Update()
+    {
+        DebugKeys();
+    }
+
+    private void DebugKeys()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            Debug.Log("Next Level in " + invokeTime + "seconds");
+            Invoke("NextLevel", invokeTime);
+        }
+        else if (Input.GetKeyDown(KeyCode.C))
+        {
+            Debug.Log("Colission Off");
+            isTransitioning = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.O))
+        {
+            Debug.Log("Collision On");
+            isTransitioning = false;
+        }
+    }
+
+
     private void OnCollisionEnter(Collision other)
     {
         if (isTransitioning){return; }
@@ -34,7 +60,7 @@ public class CollisionHandler : MonoBehaviour
                     Debug.Log("This things is FRIEND");
                 }
                 break;
-            case "Finished":
+           case "Finished":
                 {
                     StartNextLevelSequence();
                 }
