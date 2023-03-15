@@ -693,6 +693,7 @@ GameObject:
   - component: {fileID: 5894753440071349179}
   - component: {fileID: 2359066674308652823}
   - component: {fileID: 1201564518}
+  - component: {fileID: 4921484204145887087}
   m_Layer: 0
   m_Name: RocketShip
   m_TagString: Untagged
@@ -884,6 +885,18 @@ MonoBehaviour:
   successSound: {fileID: 8300000, guid: 67af8ba7590fc6442ba3c71fe7704f75, type: 3}
   crashParticle: {fileID: 4658097109745333031}
   successParticle: {fileID: 1829785829590272816}
+--- !u!114 &4921484204145887087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5894753440071349178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 621932977ba2e16438d56ba95b015545, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6348342029663152869
 GameObject:
   m_ObjectHideFlags: 0
